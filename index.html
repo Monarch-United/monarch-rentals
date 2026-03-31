@@ -840,6 +840,12 @@ footer {
   border-color: rgba(72,199,142,0.6);
 }
 .schedule-btn svg { flex-shrink: 0; }
+.property-desc {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem; font-weight: 300;
+  line-height: 1.6; color: rgba(245,240,232,0.4);
+  margin: 6px 0 4px;
+}
 .map-pin { transition: opacity 0.2s; }
 .map-pin.dimmed { opacity: 0.2; }
 .map-pin.highlighted circle:first-child { r: 18; }
@@ -1158,62 +1164,8 @@ footer {
           <text x="80" y="50" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(245,240,232,0.15)" letter-spacing="0.1em">SIGNAL MTN</text>
           <line x1="80" y1="55" x2="80" y2="130" stroke="rgba(245,240,232,0.08)" stroke-width="1" stroke-dasharray="3 3"/>
 
-          <!-- ── PROPERTY PINS ── -->
-          <!-- Pin component: outer ring + filled dot + label -->
-
-          <!-- P1: 123 Lookout Lane — vacant/available — amber -->
-          <g class="map-pin" data-idx="0" style="cursor:pointer" onclick="highlightCard(0)">
-            <circle cx="148" cy="192" r="14" fill="rgba(72,199,142,0.15)" stroke="#48c78e" stroke-width="1.5"/>
-            <circle cx="148" cy="192" r="7" fill="#48c78e"/>
-            <circle cx="148" cy="192" r="3" fill="white" opacity="0.8"/>
-            <rect x="100" y="172" width="38" height="14" rx="3" fill="rgba(26,26,46,0.85)"/>
-            <text x="119" y="182" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#48c78e">Lookout</text>
-          </g>
-
-          <!-- P2: 88 River Bend Dr — vacant/available — amber -->
-          <g class="map-pin" data-idx="1" style="cursor:pointer" onclick="highlightCard(1)">
-            <circle cx="220" cy="260" r="14" fill="rgba(72,199,142,0.15)" stroke="#48c78e" stroke-width="1.5"/>
-            <circle cx="220" cy="260" r="7" fill="#48c78e"/>
-            <circle cx="220" cy="260" r="3" fill="white" opacity="0.8"/>
-            <rect x="228" y="250" width="44" height="14" rx="3" fill="rgba(26,26,46,0.85)"/>
-            <text x="250" y="260" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#48c78e">River Bend</text>
-          </g>
-
-          <!-- P3: 411 Vine Street — occupied — green -->
-          <g class="map-pin" data-idx="2" style="cursor:pointer" onclick="highlightCard(2)">
-            <circle cx="155" cy="230" r="14" fill="rgba(242,168,35,0.15)" stroke="#F2A823" stroke-width="1.5"/>
-            <circle cx="155" cy="230" r="7" fill="#F2A823"/>
-            <circle cx="155" cy="230" r="3" fill="white" opacity="0.8"/>
-            <rect x="163" y="220" width="32" height="14" rx="3" fill="rgba(26,26,46,0.85)"/>
-            <text x="179" y="230" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#F2A823">Vine St</text>
-          </g>
-
-          <!-- P4: 72 Signal Mountain Rd — occupied — green -->
-          <g class="map-pin" data-idx="3" style="cursor:pointer" onclick="highlightCard(3)">
-            <circle cx="80" cy="110" r="14" fill="rgba(242,168,35,0.15)" stroke="#F2A823" stroke-width="1.5"/>
-            <circle cx="80" cy="110" r="7" fill="#F2A823"/>
-            <circle cx="80" cy="110" r="3" fill="white" opacity="0.8"/>
-            <rect x="88" y="100" width="48" height="14" rx="3" fill="rgba(26,26,46,0.85)"/>
-            <text x="112" y="110" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#F2A823">Signal Mtn</text>
-          </g>
-
-          <!-- P5: 295 Tremont St — off market — gray -->
-          <g class="map-pin" data-idx="4" style="cursor:pointer" onclick="highlightCard(4)">
-            <circle cx="290" cy="350" r="14" fill="rgba(245,240,232,0.05)" stroke="rgba(245,240,232,0.25)" stroke-width="1.5"/>
-            <circle cx="290" cy="350" r="7" fill="rgba(245,240,232,0.3)"/>
-            <circle cx="290" cy="350" r="3" fill="white" opacity="0.5"/>
-            <rect x="298" y="340" width="44" height="14" rx="3" fill="rgba(26,26,46,0.85)"/>
-            <text x="320" y="350" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(245,240,232,0.5)">Tremont</text>
-          </g>
-
-          <!-- P6: 18 Holtzclaw Ave — off market — gray -->
-          <g class="map-pin" data-idx="5" style="cursor:pointer" onclick="highlightCard(5)">
-            <circle cx="355" cy="390" r="14" fill="rgba(245,240,232,0.05)" stroke="rgba(245,240,232,0.25)" stroke-width="1.5"/>
-            <circle cx="355" cy="390" r="7" fill="rgba(245,240,232,0.3)"/>
-            <circle cx="355" cy="390" r="3" fill="white" opacity="0.5"/>
-            <rect x="315" y="380" width="44" height="14" rx="3" fill="rgba(26,26,46,0.85)"/>
-            <text x="337" y="390" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(245,240,232,0.5)">Holtzclaw</text>
-          </g>
+          <!-- ── PROPERTY PINS — rendered dynamically by JS ── -->
+          <g id="mapPinsContainer"></g>
 
           <!-- Compass rose -->
           <g transform="translate(476, 520)">
@@ -1237,114 +1189,7 @@ footer {
     <!-- CARDS PANEL -->
     <div class="cards-panel">
       <div class="properties-grid" id="propertiesGrid">
-
-        <div class="property-card" data-status="vacant" data-idx="0">
-          <div class="property-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg>
-          </div>
-          <div class="property-info">
-            <span class="property-status status-vacant">Available Now</span>
-            <div class="property-address">123 Lookout Lane</div>
-            <div class="property-city">Chattanooga, TN 37403</div>
-            <div class="property-details">
-              <span class="property-detail">3 bed</span>
-              <span class="property-detail">2 bath</span>
-              <span class="property-detail">1,450 sqft</span>
-              <span class="property-rent">$1,850/mo</span>
-            </div>
-            <a href="https://calendar.app.google/6EFw6E3rL77NAnsF6" target="_blank" class="schedule-btn">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Schedule a Viewing
-            </a>
-          <div class="property-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg>
-          </div>
-          <div class="property-info">
-            <span class="property-status status-vacant">Available Now</span>
-            <div class="property-address">88 River Bend Drive</div>
-            <div class="property-city">Chattanooga, TN 37405</div>
-            <div class="property-details">
-              <span class="property-detail">2 bed</span>
-              <span class="property-detail">1 bath</span>
-              <span class="property-detail">980 sqft</span>
-              <span class="property-rent">$1,350/mo</span>
-            </div>
-            <a href="https://calendar.app.google/6EFw6E3rL77NAnsF6" target="_blank" class="schedule-btn">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Schedule a Viewing
-            </a>
-          </div>
-        </div>
-
-        <div class="property-card" data-status="occupied" data-idx="2">
-          <div class="property-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg>
-          </div>
-          <div class="property-info">
-            <span class="property-status status-occupied">Occupied</span>
-            <div class="property-address">411 Vine Street</div>
-            <div class="property-city">Chattanooga, TN 37403</div>
-            <div class="property-details">
-              <span class="property-detail">4 bed</span>
-              <span class="property-detail">2 bath</span>
-              <span class="property-detail">1,800 sqft</span>
-              <span class="property-rent">$2,200/mo</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="property-card" data-status="occupied" data-idx="3">
-          <div class="property-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg>
-          </div>
-          <div class="property-info">
-            <span class="property-status status-occupied">Occupied</span>
-            <div class="property-address">72 Signal Mountain Rd</div>
-            <div class="property-city">Signal Mountain, TN 37377</div>
-            <div class="property-details">
-              <span class="property-detail">3 bed</span>
-              <span class="property-detail">2 bath</span>
-              <span class="property-detail">1,600 sqft</span>
-              <span class="property-rent">$1,950/mo</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="property-card" data-status="offmarket" data-idx="4">
-          <div class="property-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg>
-          </div>
-          <div class="property-info">
-            <span class="property-status status-offmarket">Off Market</span>
-            <div class="property-address">295 Tremont Street</div>
-            <div class="property-city">Chattanooga, TN 37405</div>
-            <div class="property-details">
-              <span class="property-detail">2 bed</span>
-              <span class="property-detail">1 bath</span>
-              <span class="property-detail">1,100 sqft</span>
-              <span class="property-rent">$1,500/mo</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="property-card" data-status="offmarket" data-idx="5">
-          <div class="property-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg>
-          </div>
-          <div class="property-info">
-            <span class="property-status status-offmarket">Off Market</span>
-            <div class="property-address">18 Holtzclaw Avenue</div>
-            <div class="property-city">Chattanooga, TN 37404</div>
-            <div class="property-details">
-              <span class="property-detail">3 bed</span>
-              <span class="property-detail">2 bath</span>
-              <span class="property-detail">1,350 sqft</span>
-              <span class="property-rent">$1,700/mo</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
+        <div class="loading-props" style="color:rgba(245,240,232,0.3);font-family:'Jost',sans-serif;font-size:0.85rem;padding:2rem;text-align:center;">Loading properties...</div>      </div>
     </div>
   </div>
 </section>
@@ -1447,16 +1292,142 @@ footer {
   <span class="footer-legal">&copy; 2025 Monarch United. All rights reserved.</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+<script>
+
+// ── PROPERTY DATA ─────────────────────────────────────────────
+// All properties are loaded from _data/properties/*.yml
+// Edit via /admin — changes deploy automatically
+
+var PROPERTIES = [
+  { address:"123 Lookout Lane",    city:"Chattanooga, TN 37403",    status:"vacant",    rent:"$1,850/mo", beds:3, baths:2, sqft:"1,450 sqft", photo:"", map_x:148, map_y:192, map_label:"Lookout"    },
+  { address:"88 River Bend Drive", city:"Chattanooga, TN 37405",    status:"vacant",    rent:"$1,350/mo", beds:2, baths:1, sqft:"980 sqft",   photo:"", map_x:220, map_y:260, map_label:"River Bend" },
+  { address:"411 Vine Street",     city:"Chattanooga, TN 37403",    status:"occupied",  rent:"$2,200/mo", beds:4, baths:2, sqft:"1,800 sqft", photo:"", map_x:155, map_y:230, map_label:"Vine St"    },
+  { address:"72 Signal Mountain Rd",city:"Signal Mountain, TN 37377",status:"occupied", rent:"$1,950/mo", beds:3, baths:2, sqft:"1,600 sqft", photo:"", map_x:80,  map_y:110, map_label:"Signal Mtn" },
+  { address:"295 Tremont Street",  city:"Chattanooga, TN 37405",    status:"offmarket", rent:"$1,500/mo", beds:2, baths:1, sqft:"1,100 sqft", photo:"", map_x:290, map_y:350, map_label:"Tremont"    },
+  { address:"18 Holtzclaw Avenue", city:"Chattanooga, TN 37404",    status:"offmarket", rent:"$1,700/mo", beds:3, baths:2, sqft:"1,350 sqft", photo:"", map_x:355, map_y:390, map_label:"Holtzclaw"  }
+];
+
+var PIN_COLORS = {
+  vacant:    { fill:'#48c78e', ring:'rgba(72,199,142,0.15)',  stroke:'#48c78e',             text:'#48c78e'             },
+  occupied:  { fill:'#F2A823', ring:'rgba(242,168,35,0.15)',  stroke:'#F2A823',             text:'#F2A823'             },
+  offmarket: { fill:'rgba(245,240,232,0.3)', ring:'rgba(245,240,232,0.05)', stroke:'rgba(245,240,232,0.25)', text:'rgba(245,240,232,0.5)' }
+};
+
+var STATUS_LABELS = { vacant:'Available Now', occupied:'Occupied', offmarket:'Off Market' };
+var SCHEDULE_URL  = 'https://calendar.app.google/6EFw6E3rL77NAnsF6';
+var SVG_NS        = 'http://www.w3.org/2000/svg';
+
+// ── RENDER CARDS ──────────────────────────────────────────────
+function renderCards() {
+  var grid = document.getElementById('propertiesGrid');
+  grid.innerHTML = '';
+  PROPERTIES.forEach(function(p, idx) {
+    var isVacant = p.status === 'vacant';
+    var card = document.createElement('div');
+    card.className = 'property-card';
+    card.dataset.status = p.status;
+    card.dataset.idx = idx;
+
+    var imgHtml = p.photo
+      ? '<img src="' + p.photo + '" alt="' + p.address + '" class="property-img"/>'
+      : '<div class="property-img-placeholder"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg></div>';
+
+    var scheduleBtn = isVacant
+      ? '<a href="' + SCHEDULE_URL + '" target="_blank" class="schedule-btn">'
+        + '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
+        + 'Schedule a Viewing</a>'
+      : '';
+
+    var descHtml = p.description
+      ? '<div class="property-desc">' + p.description + '</div>'
+      : '';
+
+    card.innerHTML = imgHtml
+      + '<div class="property-info">'
+      + '<span class="property-status status-' + p.status + '">' + STATUS_LABELS[p.status] + '</span>'
+      + '<div class="property-address">' + p.address + '</div>'
+      + '<div class="property-city">' + p.city + '</div>'
+      + descHtml
+      + '<div class="property-details">'
+      + '<span class="property-detail">' + p.beds + ' bed</span>'
+      + '<span class="property-detail">' + p.baths + ' bath</span>'
+      + '<span class="property-detail">' + p.sqft + '</span>'
+      + '<span class="property-rent">' + p.rent + '</span>'
+      + '</div>'
+      + scheduleBtn
+      + '</div>';
+
+    card.addEventListener('mouseenter', function() { highlightCard(idx); });
+    card.addEventListener('mouseleave', function() { clearHighlights(); });
+    grid.appendChild(card);
+  });
+}
+
+// ── RENDER MAP PINS ───────────────────────────────────────────
+function renderPins() {
+  var container = document.getElementById('mapPinsContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  PROPERTIES.forEach(function(p, idx) {
+    var c = PIN_COLORS[p.status];
+    var x = p.map_x, y = p.map_y;
+    var labelWidth = p.map_label.length * 5.5 + 12;
+    var labelX = x + 8;
+    var labelTextX = labelX + labelWidth / 2;
+
+    var g = document.createElementNS(SVG_NS, 'g');
+    g.setAttribute('class', 'map-pin');
+    g.setAttribute('data-idx', idx);
+    g.style.cursor = 'pointer';
+    g.setAttribute('onclick', 'highlightCard(' + idx + ')');
+
+    g.innerHTML =
+      '<circle cx="'+x+'" cy="'+y+'" r="14" fill="'+c.ring+'" stroke="'+c.stroke+'" stroke-width="1.5"/>'
+      + '<circle cx="'+x+'" cy="'+y+'" r="7" fill="'+c.fill+'"/>'
+      + '<circle cx="'+x+'" cy="'+y+'" r="3" fill="white" opacity="0.8"/>'
+      + '<rect x="'+labelX+'" y="'+(y-10)+'" width="'+labelWidth+'" height="14" rx="3" fill="rgba(26,26,46,0.85)"/>'
+      + '<text x="'+labelTextX+'" y="'+(y-3)+'" text-anchor="middle" font-family="sans-serif" font-size="8" fill="'+c.text+'">'+p.map_label+'</text>';
+
+    container.appendChild(g);
+  });
+}
+
+// ── HIGHLIGHT / CLEAR ─────────────────────────────────────────
+function highlightCard(idx) {
+  clearHighlights();
+  var card = document.querySelector('.property-card[data-idx="'+idx+'"]');
+  var pin  = document.querySelector('.map-pin[data-idx="'+idx+'"]');
+  if (card) { card.classList.add('highlighted'); card.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+  if (pin)  pin.classList.add('highlighted');
+}
+
+function clearHighlights() {
+  document.querySelectorAll('.property-card').forEach(function(c) { c.classList.remove('highlighted'); });
+  document.querySelectorAll('.map-pin').forEach(function(p) { p.classList.remove('highlighted'); });
+}
+
+// ── FILTER ────────────────────────────────────────────────────
+function filterProps(status, btn) {
+  document.querySelectorAll('.filter-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.property-card').forEach(function(card) {
+    card.style.display = (status === 'all' || card.dataset.status === status) ? '' : 'none';
+  });
+  document.querySelectorAll('.map-pin').forEach(function(pin) {
+    var card = document.querySelector('.property-card[data-idx="'+pin.dataset.idx+'"]');
+    var show = status === 'all' || (card && card.dataset.status === status);
+    pin.classList.toggle('dimmed', !show);
+  });
+}
+
+// ── MENU ──────────────────────────────────────────────────────
 function toggleMenu() {
   var btn = document.getElementById('hamburgerBtn');
   var menu = document.getElementById('megaMenu');
   var overlay = document.getElementById('menuOverlay');
-  var isOpen = menu.classList.contains('open');
-  if (isOpen) { closeMenu(); } else {
-    btn.classList.add('open');
-    menu.classList.add('open');
-    overlay.classList.add('open');
+  if (menu.classList.contains('open')) { closeMenu(); } else {
+    btn.classList.add('open'); menu.classList.add('open'); overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 }
@@ -1468,55 +1439,25 @@ function closeMenu() {
 }
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
 
-function filterProps(status, btn) {
-  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.property-card').forEach(card => {
-    const show = status === 'all' || card.dataset.status === status;
-    card.style.display = show ? '' : 'none';
-  });
-  document.querySelectorAll('.map-pin').forEach(pin => {
-    const card = document.querySelector('.property-card[data-idx="' + pin.dataset.idx + '"]');
-    const show = status === 'all' || (card && card.dataset.status === status);
-    pin.classList.toggle('dimmed', !show);
-  });
-}
-
-function highlightCard(idx) {
-  document.querySelectorAll('.property-card').forEach(c => c.classList.remove('highlighted'));
-  document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('highlighted'));
-  var card = document.querySelector('.property-card[data-idx="' + idx + '"]');
-  var pin = document.querySelector('.map-pin[data-idx="' + idx + '"]');
-  if (card) { card.classList.add('highlighted'); card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-  if (pin) pin.classList.add('highlighted');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.property-card').forEach(function(card) {
-    card.addEventListener('mouseenter', function() {
-      var idx = card.dataset.idx;
-      if (idx !== undefined) highlightCard(parseInt(idx));
-    });
-    card.addEventListener('mouseleave', function() {
-      document.querySelectorAll('.property-card').forEach(function(c) { c.classList.remove('highlighted'); });
-      document.querySelectorAll('.map-pin').forEach(function(p) { p.classList.remove('highlighted'); });
-    });
-  });
-});
-
+// ── CONTACT FORM ──────────────────────────────────────────────
 function handleSubmit(e) {
   e.preventDefault();
   var btn = e.target.querySelector('button[type=submit]');
   btn.textContent = "Message Sent — We'll be in touch!";
-  btn.style.background = '#48c78e';
-  btn.style.color = '#fff';
+  btn.style.background = '#48c78e'; btn.style.color = '#fff';
   setTimeout(function() {
     btn.textContent = 'Send Message';
-    btn.style.background = '';
-    btn.style.color = '';
+    btn.style.background = ''; btn.style.color = '';
     e.target.reset();
   }, 4000);
 }
+
+// ── INIT ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  renderCards();
+  renderPins();
+});
+
 </script>
 </body>
 </html>
