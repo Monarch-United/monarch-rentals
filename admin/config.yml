@@ -3,10 +3,11 @@ backend:
   repo: YOUR_GITHUB_USERNAME/monarch-rentals
   branch: main
 
-media_folder: "images/properties"
-public_folder: "/images/properties"
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
+
   - name: "properties"
     label: "Properties"
     label_singular: "Property"
@@ -17,13 +18,69 @@ collections:
     fields:
       - { label: "Property Address", name: "address", widget: "string", hint: "e.g. 123 Lookout Lane" }
       - { label: "City", name: "city", widget: "string", default: "Chattanooga", hint: "e.g. Chattanooga, TN 37403" }
-      - { label: "Status", name: "status", widget: "select", options: ["vacant", "occupied", "offmarket"], default: "vacant" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Available", value: "vacant" }
+          - { label: "Occupied", value: "occupied" }
+          - { label: "Off Market", value: "offmarket" }
+        default: "vacant"
+      - label: "Property Type"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Single Home", value: "single" }
+          - { label: "Multi-Unit", value: "multi" }
+          - { label: "Apartment Complex", value: "apartment" }
+        default: "single"
       - { label: "Rent (monthly)", name: "rent", widget: "string", hint: "e.g. $1,850/mo" }
-      - { label: "Bedrooms", name: "beds", widget: "number", value_type: "int", min: 1, max: 10 }
-      - { label: "Bathrooms", name: "baths", widget: "number", value_type: "float", min: 1, max: 10, step: 0.5 }
+      - { label: "Bedrooms", name: "beds", widget: "number", value_type: "int", min: 1, max: 20 }
+      - { label: "Bathrooms", name: "baths", widget: "number", value_type: "float", min: 1, max: 20, step: 0.5 }
       - { label: "Square Footage", name: "sqft", widget: "string", hint: "e.g. 1,450 sqft" }
       - { label: "Property Photo", name: "photo", widget: "image", required: false, hint: "Upload a photo of the property" }
-      - { label: "Description", name: "description", widget: "text", required: false, hint: "Optional — shown on the property listing" }
-      - { label: "Map X Position", name: "map_x", widget: "number", value_type: "int", default: 200, hint: "Horizontal pin position on map (100–460)" }
-      - { label: "Map Y Position", name: "map_y", widget: "number", value_type: "int", default: 200, hint: "Vertical pin position on map (80–480)" }
+      - { label: "Description", name: "description", widget: "text", required: false, hint: "Shown on the property detail card" }
+      - { label: "Map X Position", name: "map_x", widget: "number", value_type: "int", default: 200, hint: "Horizontal pin position on map (100-460)" }
+      - { label: "Map Y Position", name: "map_y", widget: "number", value_type: "int", default: 200, hint: "Vertical pin position on map (80-480)" }
       - { label: "Map Label", name: "map_label", widget: "string", hint: "Short name for map pin e.g. Lookout" }
+
+  - name: "team"
+    label: "Team Members"
+    label_singular: "Team Member"
+    folder: "_data/team"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Full Name", name: "name", widget: "string" }
+      - { label: "Role / Title", name: "role", widget: "string", hint: "e.g. Founder & Principal" }
+      - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Headshot or team photo" }
+      - { label: "Bio", name: "bio", widget: "text", required: false, hint: "Short bio shown on the About section" }
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+
+      - label: "Logos and Branding"
+        name: "branding"
+        file: "_data/settings/branding.yml"
+        fields:
+          - { label: "Primary Logo (sticker outline)", name: "logo_primary", widget: "image", required: false, hint: "Nav bar logo on tenant site" }
+          - { label: "Clean Logo (no outline)", name: "logo_clean", widget: "image", required: false, hint: "Owner-facing materials" }
+          - { label: "Logomark only", name: "logomark", widget: "image", required: false, hint: "Favicon and small icon use" }
+
+      - label: "Hero Section"
+        name: "hero"
+        file: "_data/settings/hero.yml"
+        fields:
+          - { label: "Hero Headline", name: "headline", widget: "string", default: "Your home. Our name on it." }
+          - { label: "Hero Subheading", name: "subheading", widget: "text" }
+          - { label: "Hero Background Image", name: "hero_image", widget: "image", required: false, hint: "Right side of the hero section" }
+
+      - label: "Contact Info"
+        name: "contact"
+        file: "_data/settings/contact.yml"
+        fields:
+          - { label: "Phone Number", name: "phone", widget: "string", required: false }
+          - { label: "Email Address", name: "email", widget: "string", required: false }
+          - { label: "Location", name: "location", widget: "string", default: "Chattanooga, Tennessee" }
