@@ -6,6 +6,12 @@
 <title>Monarch Rental Properties</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
+  /* Gill Sans stack — uses system font where available, falls back gracefully */
+  :root {
+    --font-gill: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+  }
+</style>
+<style>
 :root {
   --navy: #1a1a2e;
   --navy-mid: #252540;
@@ -54,7 +60,7 @@ nav {
 }
 
 .nav-wordmark .top {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
   font-size: 1.3rem; font-weight: 500;
   letter-spacing: 0.18em;
   color: var(--ivory);
@@ -904,7 +910,7 @@ footer {
     <li><a href="#properties">Properties</a></li>
     <li><a href="#portal">Residents</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="https://keystonerealtymanagement.managebuilding.com/Resident/portal" target="_blank" class="nav-cta">Owner Login</a></li>
+    <li><a href="https://keystonerealtymanagement.managebuilding.com/Resident/portal" target="_blank" class="nav-cta">Resident Login</a></li>
   </ul>
   <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -1021,7 +1027,7 @@ footer {
         <div class="mega-link-icon">✉️</div>
         <div>
           <div class="mega-link-title">Contact Us</div>
-          <div class="mega-link-sub"><span class="__cf_email__" data-cfemail="6602030708260b09080714050e4b13080f1203024805090b">[email&#160;protected]</span> · (423) 994-3722</div>
+          <div class="mega-link-sub">Send us a message — we respond to every inquiry personally</div>
         </div>
       </a>
       <a class="mega-link" href="https://monarch-united.com" target="_blank">
@@ -1068,7 +1074,7 @@ footer {
       <p class="eyebrow">Who We Are</p>
       <h2 class="section-title">Built on relationships,<br/>not just contracts.</h2>
     </div>
-    <p class="about-body">Monarch Rental Properties was founded on a simple belief: the people behind a property management company matter more than any system or software. We're a team that genuinely enjoys working with people — tenants and property owners alike.</p>
+    <p class="about-body">Monarch Rental Properties was built on a simple belief: the people behind a property management company matter more than any system or software. We're a team that genuinely enjoys working with people — tenants and property owners alike.</p>
     <p class="about-body">We handle the details so you don't have to, and we do it with the kind of care you'd expect from someone who has their name on the line.</p>
     <blockquote class="about-tagline">"Your home. Our name on it."</blockquote>
     <div class="team-grid">
@@ -1240,14 +1246,6 @@ footer {
     <h2 class="section-title light">Let's talk about<br/>your property.</h2>
     <p class="contact-body">Whether you're looking for your next home or looking for someone to manage yours — we'd love to hear from you. You'll hear back from a real person, not an automated system.</p>
     <div class="contact-detail">
-      <span class="contact-detail-label">Phone</span>
-      <span class="contact-detail-value">(423) 994-3722</span>
-    </div>
-    <div class="contact-detail">
-      <span class="contact-detail-label">Email</span>
-      <span class="contact-detail-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="701415111e301d1f1e110213185d051e190415145e131f1d">[email&#160;protected]</a></span>
-    </div>
-    <div class="contact-detail">
       <span class="contact-detail-label">Based In</span>
       <span class="contact-detail-value">Chattanooga, Tennessee</span>
     </div>
@@ -1266,6 +1264,10 @@ footer {
     <div class="form-group">
       <label class="form-label">Email</label>
       <input class="form-input" type="email" placeholder="jane@email.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone <span style="font-size:0.65rem;color:rgba(245,240,232,0.25);letter-spacing:0.1em;">— optional</span></label>
+      <input class="form-input" type="tel" placeholder="(423) 000-0000"/>
     </div>
     <div class="form-group">
       <label class="form-label">I am a...</label>
