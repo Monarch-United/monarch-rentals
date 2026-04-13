@@ -854,8 +854,12 @@ footer {
   margin: 6px 0 4px;
 }
 .map-pin { transition: opacity 0.2s; }
-.map-pin.dimmed { opacity: 0.2; }
-.map-pin.highlighted circle:first-child { r: 18; }
+/* Google Maps dark theme overrides */
+.gm-style .gm-style-iw-c { background:#1a1a2e !important; border:1px solid rgba(216,123,42,0.3) !important; border-radius:4px !important; box-shadow:none !important; padding:0 !important; }
+.gm-style .gm-style-iw-d { overflow:hidden !important; }
+.gm-style .gm-style-iw-t::after { background:#1a1a2e !important; }
+.gm-style .gm-ui-hover-effect { display:none !important; }
+#googleMap { border-radius:4px; }
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
@@ -900,8 +904,8 @@ footer {
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <img src="Monarch_Rentals_V1_Logomark.jpg" alt="Monarch Rental Properties logo"/>
-    <div class="nav-wordmark">
+    <img id="site-logo-nav" src="" alt="Monarch Rental Properties" style="height:48px;width:auto;display:none;"/>
+    <div class="nav-wordmark" id="nav-wordmark-text">
       <span class="top">MONARCH</span>
       <span class="sub">Rental Properties</span>
     </div>
@@ -911,7 +915,7 @@ footer {
     <li><a href="#properties">Properties</a></li>
     <li><a href="#portal">Residents</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="https://keystonerealtymanagement.managebuilding.com/Resident/portal" target="_blank" class="nav-cta">Resident Login</a></li>
+    <li><a href="https://monarchliving.managebuilding.com/Resident/portal" target="_blank" class="nav-cta">Resident Login</a></li>
   </ul>
   <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -924,7 +928,8 @@ footer {
 
     <!-- Col 1: Featured / Brand -->
     <div class="mega-col mega-col-featured">
-      <div class="mega-col-label">Monarch Rental Properties</div>
+      <img id="site-logo-menu" src="" alt="Monarch Rental Properties" style="height:56px;width:auto;display:none;margin-bottom:1rem;"/>
+      <div class="mega-col-label" id="menu-brand-label">Monarch Rental Properties</div>
       <p class="mega-tagline">"Your home.<br/>Our name on it."</p>
       <p class="mega-desc">Chattanooga's people-first property management company. We manage residential properties across the greater Chattanooga area with care, transparency, and accountability.</p>
       <div class="mega-badge"><span class="mega-badge-dot"></span>Now accepting new tenants</div>
@@ -991,7 +996,7 @@ footer {
           <div class="mega-link-sub">Happy tenants protect your asset — learn how our model works for owners</div>
         </div>
       </a>
-      <a class="mega-link" href="https://keystonerealtymanagement.managebuilding.com/Resident/portal" target="_blank">
+      <a class="mega-link" href="https://monarchliving.managebuilding.com/Resident/portal" target="_blank">
         <div class="mega-link-icon">💼</div>
         <div>
           <div class="mega-link-title">Owner Portal Login</div>
@@ -1119,81 +1124,11 @@ footer {
     <!-- MAP PANEL -->
     <div class="map-panel">
       <div class="map-container" id="monarchMap">
-        <!-- Custom SVG map of Chattanooga area with property pins -->
-        <svg id="propMap" width="100%" viewBox="0 0 520 560" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-          <defs>
-            <filter id="pinShadow" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.4)"/>
-            </filter>
-          </defs>
-
-          <!-- Map background -->
-          <rect width="520" height="560" fill="#1e1e36" rx="4"/>
-
-          <!-- Tennessee River — main body -->
-          <path d="M0 295 C40 290, 80 310, 130 305 C160 300, 180 280, 220 278 C260 276, 290 295, 330 292 C370 289, 410 270, 460 275 C490 278, 510 282, 520 280"
-                fill="none" stroke="#2a3a5c" stroke-width="22" stroke-linecap="round" opacity="0.9"/>
-          <path d="M0 295 C40 290, 80 310, 130 305 C160 300, 180 280, 220 278 C260 276, 290 295, 330 292 C370 289, 410 270, 460 275 C490 278, 510 282, 520 280"
-                fill="none" stroke="#1a2d4a" stroke-width="18" stroke-linecap="round" opacity="0.6"/>
-
-          <!-- River label -->
-          <text x="260" y="294" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.15em">TENNESSEE RIVER</text>
-
-          <!-- Road grid - major roads -->
-          <line x1="0" y1="200" x2="520" y2="200" stroke="#252545" stroke-width="2"/>
-          <line x1="0" y1="340" x2="520" y2="340" stroke="#252545" stroke-width="2"/>
-          <line x1="0" y1="420" x2="520" y2="420" stroke="#252545" stroke-width="1.5"/>
-          <line x1="130" y1="0" x2="130" y2="560" stroke="#252545" stroke-width="2"/>
-          <line x1="260" y1="0" x2="260" y2="560" stroke="#252545" stroke-width="2"/>
-          <line x1="390" y1="0" x2="390" y2="560" stroke="#252545" stroke-width="1.5"/>
-          <!-- Secondary roads -->
-          <line x1="0" y1="130" x2="520" y2="130" stroke="#212140" stroke-width="1"/>
-          <line x1="0" y1="460" x2="520" y2="460" stroke="#212140" stroke-width="1"/>
-          <line x1="65" y1="0" x2="65" y2="560" stroke="#212140" stroke-width="1"/>
-          <line x1="195" y1="0" x2="195" y2="560" stroke="#212140" stroke-width="1"/>
-          <line x1="325" y1="0" x2="325" y2="560" stroke="#212140" stroke-width="1"/>
-          <line x1="455" y1="0" x2="455" y2="560" stroke="#212140" stroke-width="1"/>
-          <!-- Diagonal — represents I-24 corridor -->
-          <line x1="0" y1="400" x2="300" y2="150" stroke="#2a2a50" stroke-width="3" opacity="0.7"/>
-          <line x1="200" y1="560" x2="520" y2="320" stroke="#2a2a50" stroke-width="3" opacity="0.7"/>
-
-          <!-- Neighborhood area fills -->
-          <rect x="80" y="155" width="140" height="130" fill="#1f1f3a" rx="2" opacity="0.5"/>
-          <rect x="230" y="310" width="160" height="120" fill="#1f1f3a" rx="2" opacity="0.5"/>
-          <rect x="340" y="150" width="130" height="110" fill="#1f1f3a" rx="2" opacity="0.4"/>
-
-          <!-- Neighborhood labels -->
-          <text x="150" y="178" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(245,240,232,0.2)" letter-spacing="0.1em">DOWNTOWN</text>
-          <text x="310" y="338" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(245,240,232,0.2)" letter-spacing="0.1em">EAST CHATT</text>
-          <text x="405" y="172" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(245,240,232,0.2)" letter-spacing="0.1em">NORTH SHORE</text>
-
-          <!-- Signal Mountain indicator (top) -->
-          <text x="80" y="50" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(245,240,232,0.15)" letter-spacing="0.1em">SIGNAL MTN</text>
-          <line x1="80" y1="55" x2="80" y2="130" stroke="rgba(245,240,232,0.08)" stroke-width="1" stroke-dasharray="3 3"/>
-
-          <!-- ── PROPERTY PINS — rendered dynamically by JS ── -->
-          <g id="mapPinsContainer"></g>
-
-          <!-- Compass rose -->
-          <g transform="translate(476, 520)">
-            <circle cx="0" cy="0" r="14" fill="rgba(26,26,46,0.8)" stroke="rgba(245,240,232,0.1)" stroke-width="0.5"/>
-            <text x="0" y="-4" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="600" fill="rgba(245,240,232,0.6)">N</text>
-            <line x1="0" y1="-2" x2="0" y2="-11" stroke="rgba(245,240,232,0.4)" stroke-width="1"/>
-          </g>
-
-          <!-- Branding watermark -->
-          <text x="16" y="545" font-family="sans-serif" font-size="8" fill="rgba(245,240,232,0.15)" letter-spacing="0.12em">MONARCH RENTAL PROPERTIES · CHATTANOOGA, TN</text>
-        </svg>
-
-        <!-- Google Maps link button -->
-        <a class="open-gmaps-btn" href="https://www.google.com/maps/search/Chattanooga+TN" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Open in Google Maps
-        </a>
+        <div id="googleMap" style="width:100%;height:560px;border-radius:4px;"></div>
       </div>
     </div>
 
-    <!-- CARDS PANEL -->
+        <!-- CARDS PANEL -->
     <div class="cards-panel">
       <div class="properties-grid" id="propertiesGrid">
         <div class="loading-props" style="color:rgba(245,240,232,0.3);font-family:'Jost',sans-serif;font-size:0.85rem;padding:2rem;text-align:center;">Loading properties...</div>      </div>
@@ -1210,11 +1145,11 @@ footer {
     <ul class="portal-features">
       <li>Pay rent online — anytime, any device</li>
       <li>Submit and track maintenance requests</li>
-      <li>Access lease documents and move-in records</li>
+      <li>Purchase renters insurance directly through the portal</li>
       <li>Message your property manager directly</li>
       <li>View payment history and statements</li>
     </ul>
-    <a href="https://keystonerealtymanagement.managebuilding.com/Resident/portal" target="_blank" class="btn-dark">Access Resident Portal</a>
+    <a href="https://monarchliving.managebuilding.com/Resident/portal" target="_blank" class="btn-dark">Access Resident Portal</a>
   </div>
   <div class="portal-features-grid">
     <div class="portal-feature-card">
@@ -1228,9 +1163,9 @@ footer {
       <div class="portal-feature-sub">Submit requests and track progress in real time.</div>
     </div>
     <div class="portal-feature-card">
-      <div class="portal-feature-icon">📄</div>
-      <div class="portal-feature-title">Documents</div>
-      <div class="portal-feature-sub">Your lease, move-in reports, and records — always accessible.</div>
+      <div class="portal-feature-icon">🛡️</div>
+      <div class="portal-feature-title">Renters Insurance</div>
+      <div class="portal-feature-sub">Purchase and manage renters insurance directly through the portal — no extra apps needed.</div>
     </div>
     <div class="portal-feature-card">
       <div class="portal-feature-icon">💬</div>
@@ -1290,36 +1225,96 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <span class="footer-brand">Monarch Rental Properties LLC &mdash; Chattanooga, TN</span>
+  <span class="footer-brand">
+    <img id="site-logo-footer" src="" alt="Monarch Rental Properties" style="height:36px;width:auto;display:none;"/>
+    <span id="footer-brand-text">Monarch Rental Properties LLC &mdash; Chattanooga, TN</span>
+  </span>
   <span class="footer-tagline">"Your home. Our name on it."</span>
   <span class="footer-legal">&copy; 2025 Monarch United. All rights reserved.</span>
 </footer>
 
-<script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 <script>
-
 // ── PROPERTY DATA ─────────────────────────────────────────────
-// All properties are loaded from _data/properties/*.yml
-// Edit via /admin — changes deploy automatically
-
-var PROPERTIES = [
-  { address:"123 Lookout Lane",    city:"Chattanooga, TN 37403",    status:"vacant",    rent:"$1,850/mo", beds:3, baths:2, sqft:"1,450 sqft", photo:"", map_x:148, map_y:192, map_label:"Lookout"    },
-  { address:"88 River Bend Drive", city:"Chattanooga, TN 37405",    status:"vacant",    rent:"$1,350/mo", beds:2, baths:1, sqft:"980 sqft",   photo:"", map_x:220, map_y:260, map_label:"River Bend" },
-  { address:"411 Vine Street",     city:"Chattanooga, TN 37403",    status:"occupied",  rent:"$2,200/mo", beds:4, baths:2, sqft:"1,800 sqft", photo:"", map_x:155, map_y:230, map_label:"Vine St"    },
-  { address:"72 Signal Mountain Rd",city:"Signal Mountain, TN 37377",status:"occupied", rent:"$1,950/mo", beds:3, baths:2, sqft:"1,600 sqft", photo:"", map_x:80,  map_y:110, map_label:"Signal Mtn" },
-  { address:"295 Tremont Street",  city:"Chattanooga, TN 37405",    status:"offmarket", rent:"$1,500/mo", beds:2, baths:1, sqft:"1,100 sqft", photo:"", map_x:290, map_y:350, map_label:"Tremont"    },
-  { address:"18 Holtzclaw Avenue", city:"Chattanooga, TN 37404",    status:"offmarket", rent:"$1,700/mo", beds:3, baths:2, sqft:"1,350 sqft", photo:"", map_x:355, map_y:390, map_label:"Holtzclaw"  }
+var PROPERTIES = [];
+var PROPERTY_FILES = [
+  "123-lookout-lane",
+  "88-river-bend-drive",
+  "411-vine-street",
+  "72-signal-mountain-rd",
+  "295-tremont-street",
+  "18-holtzclaw-avenue"
 ];
 
 var PIN_COLORS = {
-  vacant:    { fill:'#48c78e', ring:'rgba(72,199,142,0.15)',  stroke:'#48c78e',             text:'#48c78e'             },
-  occupied:  { fill:'#F2A823', ring:'rgba(242,168,35,0.15)',  stroke:'#F2A823',             text:'#F2A823'             },
-  offmarket: { fill:'rgba(245,240,232,0.3)', ring:'rgba(245,240,232,0.05)', stroke:'rgba(245,240,232,0.25)', text:'rgba(245,240,232,0.5)' }
+  vacant:    { fill:'#48c78e', stroke:'#48c78e' },
+  occupied:  { fill:'#F2A823', stroke:'#F2A823' },
+  offmarket: { fill:'rgba(245,240,232,0.4)', stroke:'rgba(245,240,232,0.4)' }
 };
 
 var STATUS_LABELS = { vacant:'Available Now', occupied:'Occupied', offmarket:'Off Market' };
 var SCHEDULE_URL  = 'https://calendar.app.google/6EFw6E3rL77NAnsF6';
-var SVG_NS        = 'http://www.w3.org/2000/svg';
+var gMap, geocoder, markers = [];
+
+// ── GOOGLE MAPS INIT ──────────────────────────────────────────
+function initMap() {
+  geocoder = new google.maps.Geocoder();
+  gMap = new google.maps.Map(document.getElementById('googleMap'), {
+    center: { lat: 35.0456, lng: -85.3097 },
+    zoom: 12,
+    styles: [
+      { elementType:'geometry', stylers:[{ color:'#1a1a2e' }] },
+      { elementType:'labels.text.fill', stylers:[{ color:'#8c8c9e' }] },
+      { elementType:'labels.text.stroke', stylers:[{ color:'#1a1a2e' }] },
+      { featureType:'road', elementType:'geometry', stylers:[{ color:'#252545' }] },
+      { featureType:'road', elementType:'geometry.stroke', stylers:[{ color:'#1a1a2e' }] },
+      { featureType:'road.highway', elementType:'geometry', stylers:[{ color:'#2d2d50' }] },
+      { featureType:'water', elementType:'geometry', stylers:[{ color:'#0d1b33' }] },
+      { featureType:'water', elementType:'labels.text.fill', stylers:[{ color:'#3d5a80' }] },
+      { featureType:'poi', stylers:[{ visibility:'off' }] },
+      { featureType:'transit', stylers:[{ visibility:'off' }] },
+      { featureType:'landscape', elementType:'geometry', stylers:[{ color:'#1e1e36' }] },
+      { featureType:'administrative', elementType:'geometry.stroke', stylers:[{ color:'#2d2d50' }] }
+    ]
+  });
+  // Only geocode if properties already loaded — otherwise loadProperties() will call it
+  if (PROPERTIES.length > 0) geocodeProperties();
+}
+
+function geocodeProperties() {
+  markers = [];
+  PROPERTIES.forEach(function(p, idx) {
+    geocoder.geocode({ address: p.address }, function(results, status) {
+      if (status === 'OK') {
+        var pos = results[0].geometry.location;
+        var c = PIN_COLORS[p.status];
+        var marker = new google.maps.Marker({
+          position: pos,
+          map: gMap,
+          title: p.label,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: c.fill,
+            fillOpacity: 1,
+            strokeColor: '#1a1a2e',
+            strokeWeight: 2
+          }
+        });
+        var infoContent = '<div style="background:#1a1a2e;color:#F5F0E8;padding:10px 14px;border-radius:4px;font-family:sans-serif;min-width:160px;">'
+          + '<div style="font-size:13px;font-weight:500;margin-bottom:3px;">' + p.label + '</div>'
+          + '<div style="font-size:11px;color:rgba(245,240,232,0.5);margin-bottom:6px;">' + STATUS_LABELS[p.status] + '</div>'
+          + '<div style="font-size:12px;color:#D87B2A;">' + p.rent + ' &nbsp;·&nbsp; ' + p.beds + 'bd ' + p.baths + 'ba</div>'
+          + '</div>';
+        var infoWindow = new google.maps.InfoWindow({ content: infoContent });
+        marker.addListener('click', function() {
+          infoWindow.open(gMap, marker);
+          highlightCard(idx);
+        });
+        markers[idx] = marker;
+      }
+    });
+  });
+}
 
 // ── RENDER CARDS ──────────────────────────────────────────────
 function renderCards() {
@@ -1333,7 +1328,7 @@ function renderCards() {
     card.dataset.idx = idx;
 
     var imgHtml = p.photo
-      ? '<img src="' + p.photo + '" alt="' + p.address + '" class="property-img"/>'
+      ? '<img src="' + p.photo + '" alt="' + p.label + '" class="property-img" style="width:100%;height:90px;object-fit:cover;"/>'
       : '<div class="property-img-placeholder"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg></div>';
 
     var scheduleBtn = isVacant
@@ -1342,16 +1337,11 @@ function renderCards() {
         + 'Schedule a Viewing</a>'
       : '';
 
-    var descHtml = p.description
-      ? '<div class="property-desc">' + p.description + '</div>'
-      : '';
-
     card.innerHTML = imgHtml
       + '<div class="property-info">'
       + '<span class="property-status status-' + p.status + '">' + STATUS_LABELS[p.status] + '</span>'
-      + '<div class="property-address">' + p.address + '</div>'
-      + '<div class="property-city">' + p.city + '</div>'
-      + descHtml
+      + '<div class="property-address">' + p.label + '</div>'
+      + '<div class="property-city">' + p.address.split(',').slice(1).join(',').trim() + '</div>'
       + '<div class="property-details">'
       + '<span class="property-detail">' + p.beds + ' bed</span>'
       + '<span class="property-detail">' + p.baths + ' bath</span>'
@@ -1367,47 +1357,16 @@ function renderCards() {
   });
 }
 
-// ── RENDER MAP PINS ───────────────────────────────────────────
-function renderPins() {
-  var container = document.getElementById('mapPinsContainer');
-  if (!container) return;
-  container.innerHTML = '';
-  PROPERTIES.forEach(function(p, idx) {
-    var c = PIN_COLORS[p.status];
-    var x = p.map_x, y = p.map_y;
-    var labelWidth = p.map_label.length * 5.5 + 12;
-    var labelX = x + 8;
-    var labelTextX = labelX + labelWidth / 2;
-
-    var g = document.createElementNS(SVG_NS, 'g');
-    g.setAttribute('class', 'map-pin');
-    g.setAttribute('data-idx', idx);
-    g.style.cursor = 'pointer';
-    g.setAttribute('onclick', 'highlightCard(' + idx + ')');
-
-    g.innerHTML =
-      '<circle cx="'+x+'" cy="'+y+'" r="14" fill="'+c.ring+'" stroke="'+c.stroke+'" stroke-width="1.5"/>'
-      + '<circle cx="'+x+'" cy="'+y+'" r="7" fill="'+c.fill+'"/>'
-      + '<circle cx="'+x+'" cy="'+y+'" r="3" fill="white" opacity="0.8"/>'
-      + '<rect x="'+labelX+'" y="'+(y-10)+'" width="'+labelWidth+'" height="14" rx="3" fill="rgba(26,26,46,0.85)"/>'
-      + '<text x="'+labelTextX+'" y="'+(y-3)+'" text-anchor="middle" font-family="sans-serif" font-size="8" fill="'+c.text+'">'+p.map_label+'</text>';
-
-    container.appendChild(g);
-  });
-}
-
-// ── HIGHLIGHT / CLEAR ─────────────────────────────────────────
+// ── HIGHLIGHT ─────────────────────────────────────────────────
 function highlightCard(idx) {
   clearHighlights();
   var card = document.querySelector('.property-card[data-idx="'+idx+'"]');
-  var pin  = document.querySelector('.map-pin[data-idx="'+idx+'"]');
   if (card) { card.classList.add('highlighted'); card.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
-  if (pin)  pin.classList.add('highlighted');
+  if (markers[idx]) { gMap && gMap.panTo(markers[idx].getPosition()); }
 }
 
 function clearHighlights() {
   document.querySelectorAll('.property-card').forEach(function(c) { c.classList.remove('highlighted'); });
-  document.querySelectorAll('.map-pin').forEach(function(p) { p.classList.remove('highlighted'); });
 }
 
 // ── FILTER ────────────────────────────────────────────────────
@@ -1417,11 +1376,13 @@ function filterProps(status, btn) {
   document.querySelectorAll('.property-card').forEach(function(card) {
     card.style.display = (status === 'all' || card.dataset.status === status) ? '' : 'none';
   });
-  document.querySelectorAll('.map-pin').forEach(function(pin) {
-    var card = document.querySelector('.property-card[data-idx="'+pin.dataset.idx+'"]');
-    var show = status === 'all' || (card && card.dataset.status === status);
-    pin.classList.toggle('dimmed', !show);
-  });
+  if (markers.length) {
+    markers.forEach(function(marker, idx) {
+      if (!marker) return;
+      var show = status === 'all' || PROPERTIES[idx].status === status;
+      marker.setVisible(show);
+    });
+  }
 }
 
 // ── MENU ──────────────────────────────────────────────────────
@@ -1429,17 +1390,27 @@ function toggleMenu() {
   var btn = document.getElementById('hamburgerBtn');
   var menu = document.getElementById('megaMenu');
   var overlay = document.getElementById('menuOverlay');
-  if (menu.classList.contains('open')) { closeMenu(); } else {
-    btn.classList.add('open'); menu.classList.add('open'); overlay.classList.add('open');
+  if (!btn || !menu || !overlay) return;
+  if (menu.classList.contains('open')) {
+    closeMenu();
+  } else {
+    btn.classList.add('open');
+    menu.classList.add('open');
+    overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 }
+
 function closeMenu() {
-  document.getElementById('hamburgerBtn').classList.remove('open');
-  document.getElementById('megaMenu').classList.remove('open');
-  document.getElementById('menuOverlay').classList.remove('open');
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('megaMenu');
+  var overlay = document.getElementById('menuOverlay');
+  if (btn) btn.classList.remove('open');
+  if (menu) menu.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
   document.body.style.overflow = '';
 }
+
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
 
 // ── CONTACT FORM ──────────────────────────────────────────────
@@ -1455,22 +1426,98 @@ function handleSubmit(e) {
   }, 4000);
 }
 
-// ── INIT ──────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  renderCards();
-  renderPins();
-});
-
-<script>
+// ── NETLIFY IDENTITY ──────────────────────────────────────────
 if (window.netlifyIdentity) {
-  window.netlifyIdentity.on("init", function(user) {
+  window.netlifyIdentity.on('init', function(user) {
     if (!user) {
-      window.netlifyIdentity.on("login", function() {
-        document.location.href = "/admin/";
+      window.netlifyIdentity.on('login', function() {
+        document.location.href = '/admin/';
       });
     }
   });
 }
+
+// ── YAML PARSER (minimal) ────────────────────────────────────
+function parseYaml(text) {
+  var obj = {};
+  var lines = text.split('\n');
+  lines.forEach(function(line) {
+    var m = line.match(/^([\w_]+):\s*"?(.*?)"?\s*$/);
+    if (m && m[1]) {
+      var val = m[2].replace(/^"|"$/g, '').trim();
+      // parse numbers
+      if (val !== '' && !isNaN(val) && val.indexOf('.') !== -1) obj[m[1]] = parseFloat(val);
+      else if (val !== '' && !isNaN(val)) obj[m[1]] = parseInt(val);
+      else obj[m[1]] = val;
+    }
+  });
+  return obj;
+}
+
+// ── PROPERTY LOADER ───────────────────────────────────────────
+function loadProperties() {
+  var promises = PROPERTY_FILES.map(function(slug) {
+    return fetch('/_data/properties/' + slug + '.yml')
+      .then(function(r) { return r.ok ? r.text() : null; })
+      .then(function(text) { return text ? parseYaml(text) : null; })
+      .catch(function() { return null; });
+  });
+
+  Promise.all(promises).then(function(results) {
+    PROPERTIES = results.filter(function(p) { return p !== null; });
+    renderCards();
+    // Geocode only if Maps API already loaded, otherwise initMap will handle it
+    if (window.google && window.google.maps && geocoder) {
+      geocodeProperties();
+    }
+  });
+}
+
+// ── LOGO LOADER ───────────────────────────────────────────────
+function loadBranding() {
+  fetch('/_data/settings/branding.yml')
+    .then(function(r) { return r.ok ? r.text() : null; })
+    .then(function(text) {
+      if (!text) return;
+      var data = parseYaml(text);
+      var logoUrl    = data.logo_main   || '';
+      var faviconUrl = data.favicon     || '';
+
+      if (logoUrl) {
+        // Nav bar
+        var navLogo = document.getElementById('site-logo-nav');
+        var navText = document.getElementById('nav-wordmark-text');
+        if (navLogo) { navLogo.src = logoUrl; navLogo.style.display = 'block'; }
+        if (navText) navText.style.display = 'none';
+
+        // Hamburger dropdown
+        var menuLogo  = document.getElementById('site-logo-menu');
+        var menuLabel = document.getElementById('menu-brand-label');
+        if (menuLogo)  { menuLogo.src = logoUrl; menuLogo.style.display = 'block'; }
+        if (menuLabel) menuLabel.style.display = 'none';
+
+        // Footer
+        var footerLogo = document.getElementById('site-logo-footer');
+        var footerText = document.getElementById('footer-brand-text');
+        if (footerLogo) { footerLogo.src = logoUrl; footerLogo.style.display = 'block'; }
+        if (footerText) footerText.style.display = 'none';
+      }
+
+      if (faviconUrl) {
+        var link = document.querySelector("link[rel~='icon']") || document.createElement('link');
+        link.rel = 'icon'; link.type = 'image/png'; link.href = faviconUrl;
+        document.head.appendChild(link);
+      }
+    })
+    .catch(function() {});
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  loadProperties();
+  loadBranding();
+});
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq3pgBJZo18u90aEr8NF-eryve8CeNy_o&callback=initMap&libraries=places" async defer></script>
 </body>
 </html>

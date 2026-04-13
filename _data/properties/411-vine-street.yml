@@ -1,12 +1,10 @@
-address: "411 Vine Street"
-city: "Chattanooga, TN 37403"
+address: "411 Vine Street, Chattanooga, TN 37403"
+label: "Vine Street"
 status: "occupied"
+type: "single"
 rent: "$2,200/mo"
 beds: 4
 baths: 2
 sqft: "1,800 sqft"
 photo: ""
 description: "Spacious four-bedroom in a sought-after downtown location. Large backyard, hardwood floors throughout."
-map_x: 155
-map_y: 230
-map_label: "Vine St"

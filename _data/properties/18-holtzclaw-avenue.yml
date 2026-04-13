@@ -1,12 +1,10 @@
-address: "18 Holtzclaw Avenue"
-city: "Chattanooga, TN 37404"
+address: "18 Holtzclaw Avenue, Chattanooga, TN 37404"
+label: "Holtzclaw Ave"
 status: "offmarket"
+type: "single"
 rent: "$1,700/mo"
 beds: 3
 baths: 2
 sqft: "1,350 sqft"
 photo: ""
 description: "Three-bedroom home in East Chattanooga. Off market pending renovation — available soon."
-map_x: 355
-map_y: 390
-map_label: "Holtzclaw"

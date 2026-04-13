@@ -3,6 +3,13 @@
   to = "/admin/index.html"
   status = 200
 
+# Serve _data folder as public static files
+[[headers]]
+  for = "/_data/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "no-cache"
+
 [[headers]]
   for = "/admin/*"
   [headers.values]

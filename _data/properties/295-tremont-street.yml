@@ -1,12 +1,10 @@
-address: "295 Tremont Street"
-city: "Chattanooga, TN 37405"
+address: "295 Tremont Street, Chattanooga, TN 37405"
+label: "Tremont St"
 status: "offmarket"
+type: "single"
 rent: "$1,500/mo"
 beds: 2
 baths: 1
 sqft: "1,100 sqft"
 photo: ""
 description: "Charming two-bedroom in North Chattanooga. Currently off market — contact us to be notified when available."
-map_x: 290
-map_y: 350
-map_label: "Tremont"

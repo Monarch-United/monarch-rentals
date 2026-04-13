@@ -1,12 +1,10 @@
-address: "123 Lookout Lane"
-city: "Chattanooga, TN 37403"
+address: "123 Lookout Lane, Chattanooga, TN 37403"
+label: "Lookout Lane"
 status: "vacant"
+type: "single"
 rent: "$1,850/mo"
 beds: 3
 baths: 2
 sqft: "1,450 sqft"
 photo: ""
 description: "Bright and spacious home in the heart of Chattanooga. Recently updated kitchen and bathrooms. Off-street parking included."
-map_x: 148
-map_y: 192
-map_label: "Lookout"
