@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Monarch Rental Properties</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  /* Gill Sans stack — uses system font where available, falls back gracefully */
+  :root {
+    --font-gill: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+  }
+</style>
+<style>
+:root {
+  --navy: #1a1a2e;
+  --navy-mid: #252540;
+  --amber: #D87B2A;
+  --amber-light: #E8943F;
+  --gold: #F2A823;
+  --ivory: #F5F0E8;
+  --ivory-dark: #EDE7DA;
+  --brown: #3D1F0A;
+  --charcoal: #2C2C2A;
+  --text-muted: #7a7870;
+  --white: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--ivory);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 4rem;
+  background: rgba(26,26,46,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(216,123,42,0.2);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 1rem;
+}
+
+.nav-logo img {
+  height: 48px; width: auto;
+}
+
+.nav-wordmark {
+  display: flex; flex-direction: column; line-height: 1;
+}
+
+.nav-wordmark .top {
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+  font-size: 1.3rem; font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--ivory);
+}
+
+.nav-wordmark .sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.65rem; font-weight: 400;
+  letter-spacing: 0.25em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem; font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--amber); }
+
+.nav-cta {
+  background: var(--amber);
+  color: var(--navy) !important;
+  padding: 0.6rem 1.4rem;
+  border-radius: 2px;
+  font-weight: 500 !important;
+  transition: background 0.2s !important;
+}
+
+.nav-cta:hover { background: var(--amber-light) !important; color: var(--navy) !important; }
+
+/* ── HAMBURGER MENU ── */
+.hamburger-btn {
+  display: flex; flex-direction: column;
+  justify-content: center; gap: 5px;
+  width: 36px; height: 36px;
+  background: transparent; border: none;
+  cursor: pointer; padding: 4px;
+  border-radius: 2px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.hamburger-btn:hover { background: rgba(245,240,232,0.08); }
+.hamburger-btn span {
+  display: block; height: 1.5px;
+  background: var(--ivory);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s, width 0.3s;
+}
+.hamburger-btn span:nth-child(2) { width: 70%; }
+.hamburger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mega dropdown */
+.mega-menu {
+  position: fixed; top: 73px; left: 0; right: 0;
+  background: rgba(20,20,38,0.98);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(216,123,42,0.15);
+  z-index: 99;
+  transform: translateY(-8px);
+  opacity: 0; pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  max-height: calc(100vh - 73px);
+  overflow-y: auto;
+}
+.mega-menu.open {
+  transform: translateY(0);
+  opacity: 1; pointer-events: all;
+}
+.mega-inner {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.mega-col {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid rgba(245,240,232,0.05);
+}
+.mega-col:last-child { border-right: none; }
+.mega-col-featured {
+  background: rgba(216,123,42,0.05);
+  border-right: 1px solid rgba(216,123,42,0.1) !important;
+}
+.mega-col-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.mega-col-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(216,123,42,0.2);
+}
+.mega-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 300; font-style: italic;
+  color: var(--ivory); line-height: 1.25;
+  margin-bottom: 1rem;
+}
+.mega-desc {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem; font-weight: 300;
+  line-height: 1.8; color: rgba(245,240,232,0.45);
+  margin-bottom: 1.5rem;
+}
+.mega-link {
+  display: flex; align-items: flex-start;
+  gap: 12px; padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(245,240,232,0.05);
+  text-decoration: none;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+.mega-link:last-child { border-bottom: none; }
+.mega-link:hover .mega-link-title { color: var(--amber); }
+.mega-link:hover { border-bottom-color: rgba(216,123,42,0.2); }
+.mega-link-icon {
+  width: 32px; height: 32px; border-radius: 4px;
+  background: rgba(245,240,232,0.05);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+  font-size: 14px;
+}
+.mega-link-title {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.88rem; font-weight: 400;
+  color: var(--ivory); margin-bottom: 2px;
+  transition: color 0.2s;
+}
+.mega-link-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem; font-weight: 300;
+  color: rgba(245,240,232,0.35); line-height: 1.5;
+}
+.mega-cta-row {
+  margin-top: 1.5rem; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.mega-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(72,199,142,0.12);
+  border: 1px solid rgba(72,199,142,0.25);
+  border-radius: 20px; padding: 4px 12px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem; font-weight: 400;
+  color: #48c78e; margin-bottom: 1rem;
+}
+.mega-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #48c78e; flex-shrink: 0;
+}
+/* Overlay */
+.menu-overlay {
+  position: fixed; inset: 0; z-index: 98;
+  background: rgba(0,0,0,0.4);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.menu-overlay.open { opacity: 1; pointer-events: all; }
+
+/* ── HERO ── */
+#home {
+  min-height: 100vh;
+  background: var(--navy);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6rem 4rem 6rem 6rem;
+  position: relative; z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block; width: 30px; height: 1px;
+  background: var(--amber);
+}
+
+.hero-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.2rem, 5vw, 5rem);
+  font-weight: 300; line-height: 1.1;
+  color: var(--ivory);
+  margin-bottom: 1.8rem;
+}
+
+.hero-headline em {
+  font-style: italic; color: var(--amber);
+}
+
+.hero-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem; font-weight: 300;
+  line-height: 1.8; color: rgba(245,240,232,0.65);
+  max-width: 440px;
+  margin-bottom: 3rem;
+}
+
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--amber);
+  color: var(--navy);
+  padding: 0.9rem 2rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-block;
+}
+
+.btn-primary:hover { background: var(--amber-light); transform: translateY(-1px); }
+
+.btn-secondary {
+  border: 1px solid rgba(245,240,232,0.3);
+  color: var(--ivory);
+  padding: 0.9rem 2rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: border-color 0.2s, color 0.2s;
+  display: inline-block;
+}
+
+.btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+.hero-right {
+  position: relative; overflow: hidden;
+}
+
+.hero-right img {
+  width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.6;
+}
+
+.hero-right::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--navy) 0%, transparent 40%);
+}
+
+.hero-props {
+  position: absolute; bottom: 3rem; left: 6rem;
+  display: flex; align-items: center; gap: 0; z-index: 2;
+  background: rgba(26,26,46,0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(245,240,232,0.08);
+  border-radius: 2px;
+  padding: 0.9rem 1.5rem;
+}
+.hero-prop {
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-prop-mark {
+  color: var(--amber);
+  font-size: 0.9rem; font-weight: 300; line-height: 1;
+}
+.hero-prop-text {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem; font-weight: 400;
+  letter-spacing: 0.1em;
+  color: rgba(245,240,232,0.7);
+  white-space: nowrap;
+}
+.hero-prop-divider {
+  width: 1px; height: 16px;
+  background: rgba(245,240,232,0.12);
+  margin: 0 1.2rem;
+}
+
+/* ── SECTIONS ── */
+.section { padding: 7rem 6rem; }
+
+.section-header { margin-bottom: 4rem; }
+
+.eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--amber);
+  display: flex; align-items: center; gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.eyebrow::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: var(--amber);
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-weight: 300; line-height: 1.15;
+  color: var(--navy);
+}
+
+.section-title.light { color: var(--ivory); }
+
+/* ── ABOUT ── */
+#about {
+  background: var(--ivory);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+  align-items: center;
+}
+
+.about-image {
+  position: relative; border-radius: 2px; overflow: hidden;
+}
+
+.about-image img {
+  width: 100%; height: 540px; object-fit: cover;
+  display: block;
+}
+
+.about-image-accent {
+  position: absolute; bottom: -1.5rem; right: -1.5rem;
+  width: 120px; height: 120px;
+  background: var(--amber);
+  border-radius: 2px; z-index: -1;
+}
+
+.about-content .section-title { margin-bottom: 1.5rem; }
+
+.about-body {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem; font-weight: 300;
+  line-height: 1.9; color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.about-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-style: italic;
+  font-weight: 400; color: var(--navy);
+  border-left: 2px solid var(--amber);
+  padding-left: 1.2rem;
+  margin: 2rem 0;
+  line-height: 1.5;
+}
+
+.team-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.team-card {
+  background: var(--ivory-dark);
+  border-radius: 2px; padding: 1.5rem;
+  border-bottom: 2px solid var(--amber);
+}
+
+.team-card .name {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem; font-weight: 500;
+  color: var(--navy); margin-bottom: 2px;
+}
+
+.team-card .role {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem; font-style: italic;
+  color: var(--amber);
+}
+
+/* ── PROPERTIES ── */
+#properties {
+  background: var(--navy);
+  padding: 7rem 6rem;
+}
+
+.properties-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 3rem;
+}
+
+.filter-tabs {
+  display: flex; gap: 0.5rem;
+}
+
+.filter-tab {
+  padding: 0.5rem 1.2rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem; font-weight: 400;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid rgba(245,240,232,0.2);
+  color: rgba(245,240,232,0.5);
+  background: transparent;
+  border-radius: 2px; cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-tab.active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--navy);
+}
+
+.filter-tab:hover:not(.active) {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.properties-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+
+.property-card {
+  background: var(--navy-mid);
+  border-radius: 2px; overflow: hidden;
+  border: 1px solid rgba(245,240,232,0.06);
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.property-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(216,123,42,0.3);
+}
+
+.property-img {
+  width: 100%; height: 200px;
+  object-fit: cover; display: block;
+  background: var(--charcoal);
+}
+
+.property-img-placeholder {
+  width: 100%; height: 200px;
+  background: linear-gradient(135deg, #252540 0%, #1a1a2e 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.property-img-placeholder svg { opacity: 0.15; }
+
+.property-info { padding: 1.5rem; }
+
+.property-status {
+  display: inline-block;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px;
+  margin-bottom: 0.8rem;
+}
+
+.status-vacant {
+  background: rgba(72,199,142,0.15);
+  color: #48c78e;
+}
+
+.status-occupied {
+  background: rgba(242,168,35,0.15);
+  color: var(--gold);
+}
+
+.status-offmarket {
+  background: rgba(245,240,232,0.08);
+  color: rgba(245,240,232,0.4);
+}
+
+.property-address {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-weight: 400;
+  color: var(--ivory); margin-bottom: 0.3rem;
+  line-height: 1.3;
+}
+
+.property-city {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem; font-weight: 300;
+  color: rgba(245,240,232,0.45);
+  letter-spacing: 0.08em; margin-bottom: 1rem;
+}
+
+.property-details {
+  display: flex; gap: 1.2rem;
+  border-top: 1px solid rgba(245,240,232,0.06);
+  padding-top: 1rem;
+}
+
+.property-detail {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem; font-weight: 400;
+  color: rgba(245,240,232,0.45);
+  display: flex; align-items: center; gap: 4px;
+}
+
+.property-rent {
+  margin-left: auto;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 500;
+  color: var(--amber);
+}
+
+/* ── PORTAL ── */
+#portal {
+  background: var(--amber);
+  padding: 6rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center;
+}
+
+.portal-content .section-title {
+  color: var(--navy); margin-bottom: 1rem;
+}
+
+.portal-body {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem; font-weight: 300;
+  line-height: 1.8; color: rgba(26,26,46,0.7);
+  margin-bottom: 2rem;
+}
+
+.portal-features {
+  list-style: none; margin-bottom: 2.5rem;
+}
+
+.portal-features li {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem; font-weight: 400;
+  color: var(--navy);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(26,26,46,0.1);
+  display: flex; align-items: center; gap: 0.8rem;
+}
+
+.portal-features li::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--navy); border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.btn-dark {
+  background: var(--navy);
+  color: var(--ivory);
+  padding: 0.9rem 2rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.btn-dark:hover { background: var(--charcoal); }
+
+.portal-features-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.portal-feature-card {
+  background: rgba(26,26,46,0.08);
+  border: 1px solid rgba(26,26,46,0.12);
+  border-radius: var(--border-radius-lg, 12px);
+  padding: 1.25rem;
+  transition: border-color 0.2s;
+}
+.portal-feature-card:hover { border-color: rgba(26,26,46,0.25); }
+.portal-feature-icon { font-size: 1.4rem; margin-bottom: 0.6rem; }
+.portal-feature-title {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem; font-weight: 500;
+  color: var(--navy); margin-bottom: 4px;
+}
+.portal-feature-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem; font-weight: 300;
+  line-height: 1.6; color: rgba(26,26,46,0.6);
+}
+
+/* ── CONTACT ── */
+#contact {
+  background: var(--navy);
+  padding: 7rem 6rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: start;
+}
+
+.contact-info .section-title.light { margin-bottom: 1.5rem; }
+
+.contact-body {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem; font-weight: 300;
+  line-height: 1.8; color: rgba(245,240,232,0.55);
+  margin-bottom: 3rem;
+}
+
+.contact-detail {
+  display: flex; align-items: flex-start; gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-detail-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--amber); min-width: 80px;
+}
+
+.contact-detail-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 400;
+  color: var(--ivory);
+}
+
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+
+.form-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(245,240,232,0.4);
+}
+
+.form-input, .form-select, .form-textarea {
+  background: rgba(245,240,232,0.05);
+  border: 1px solid rgba(245,240,232,0.1);
+  border-radius: 2px;
+  padding: 0.8rem 1rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem; font-weight: 300;
+  color: var(--ivory);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+  color: rgba(245,240,232,0.2);
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--amber);
+}
+
+.form-select {
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(245,240,232,0.3)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+}
+
+.form-select option { background: var(--navy); color: var(--ivory); }
+
+.form-textarea { resize: vertical; min-height: 120px; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--brown);
+  padding: 3rem 6rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem; font-style: italic;
+  color: rgba(245,240,232,0.4);
+}
+
+.footer-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-style: italic;
+  color: var(--amber); opacity: 0.8;
+}
+
+.footer-legal {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem; font-weight: 300;
+  color: rgba(245,240,232,0.25);
+  letter-spacing: 0.08em;
+}
+
+/* ── MAP + SPLIT LAYOUT ── */
+.map-legend {
+  display: flex; gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem; font-weight: 400;
+  color: rgba(245,240,232,0.5);
+  letter-spacing: 0.08em;
+}
+.legend-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.properties-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.map-panel {
+  position: sticky; top: 90px;
+}
+.map-container {
+  border-radius: 4px; overflow: hidden;
+  border: 1px solid rgba(245,240,232,0.06);
+  position: relative;
+}
+.open-gmaps-btn {
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(26,26,46,0.92);
+  border: 1px solid rgba(245,240,232,0.12);
+  color: rgba(245,240,232,0.6);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem; font-weight: 400;
+  letter-spacing: 0.08em;
+  padding: 6px 12px; border-radius: 2px;
+  text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.open-gmaps-btn:hover { color: var(--amber); border-color: var(--amber); }
+.cards-panel { overflow-y: auto; max-height: 620px; }
+.cards-panel .properties-grid {
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.cards-panel .property-card {
+  display: grid; grid-template-columns: 100px 1fr;
+}
+.cards-panel .property-img-placeholder {
+  height: 100%; min-height: 90px; width: 100px;
+}
+.cards-panel .property-card.highlighted {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 1px var(--amber);
+}
+.schedule-btn {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 10px;
+  padding: 7px 12px;
+  background: transparent;
+  border: 1px solid rgba(72,199,142,0.3);
+  border-radius: 2px;
+  color: #48c78e;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem; font-weight: 400;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.schedule-btn:hover {
+  background: rgba(72,199,142,0.08);
+  border-color: rgba(72,199,142,0.6);
+}
+.schedule-btn svg { flex-shrink: 0; }
+.property-desc {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem; font-weight: 300;
+  line-height: 1.6; color: rgba(245,240,232,0.4);
+  margin: 6px 0 4px;
+}
+.map-pin { transition: opacity 0.2s; }
+/* Google Maps dark theme overrides */
+.gm-style .gm-style-iw-c { background:#1a1a2e !important; border:1px solid rgba(216,123,42,0.3) !important; border-radius:4px !important; box-shadow:none !important; padding:0 !important; }
+.gm-style .gm-style-iw-d { overflow:hidden !important; }
+.gm-style .gm-style-iw-t::after { background:#1a1a2e !important; }
+.gm-style .gm-ui-hover-effect { display:none !important; }
+#googleMap { border-radius:4px; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-left > * {
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-eyebrow { animation-delay: 0.1s; }
+.hero-headline { animation-delay: 0.25s; }
+.hero-sub { animation-delay: 0.4s; }
+.hero-actions { animation-delay: 0.55s; }
+.hero-props { animation-delay: 0.7s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 2rem; }
+  .nav-links { display: none; }
+  #home { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 4rem 2rem; }
+  .section { padding: 4rem 2rem; }
+  #about, #contact, #portal { grid-template-columns: 1fr; gap: 2rem; }
+  .properties-grid { grid-template-columns: 1fr; }
+  .hero-props { left: 2rem; bottom: 2rem; padding: 0.7rem 1rem; }
+  .hero-prop-text { font-size: 0.65rem; }
+  .hero-prop-divider { margin: 0 0.7rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+  #properties, #contact, #portal { padding: 4rem 2rem; }
+  .properties-header { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img id="site-logo-nav" src="" alt="Monarch Rental Properties" style="height:48px;width:auto;display:none;"/>
+    <div class="nav-wordmark" id="nav-wordmark-text">
+      <span class="top">MONARCH</span>
+      <span class="sub">Rental Properties</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#properties">Properties</a></li>
+    <li><a href="#portal">Residents</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://monarchliving.managebuilding.com/Resident/portal" target="_blank" class="nav-cta">Resident Login</a></li>
+  </ul>
+  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MEGA MENU -->
+<div class="mega-menu" id="megaMenu">
+  <div class="mega-inner">
+
+    <!-- Col 1: Featured / Brand -->
+    <div class="mega-col mega-col-featured">
+      <img id="site-logo-menu" src="" alt="Monarch Rental Properties" style="height:56px;width:auto;display:none;margin-bottom:1rem;"/>
+      <div class="mega-col-label" id="menu-brand-label">Monarch Rental Properties</div>
+      <p class="mega-tagline">"Your home.<br/>Our name on it."</p>
+      <p class="mega-desc">Chattanooga's people-first property management company. We manage residential properties across the greater Chattanooga area with care, transparency, and accountability.</p>
+      <div class="mega-badge"><span class="mega-badge-dot"></span>Now accepting new tenants</div>
+      <div class="mega-cta-row">
+        <a href="#properties" class="btn-primary" onclick="closeMenu()" style="font-size:0.75rem; padding:0.6rem 1.2rem;">View Properties</a>
+        <a href="#contact" class="btn-secondary" onclick="closeMenu()" style="font-size:0.75rem; padding:0.6rem 1.2rem;">Get in Touch</a>
+      </div>
+    </div>
+
+    <!-- Col 2: Tenants -->
+    <div class="mega-col">
+      <div class="mega-col-label">For Tenants</div>
+      <a class="mega-link" href="#properties" onclick="closeMenu()">
+        <div class="mega-link-icon">🏠</div>
+        <div>
+          <div class="mega-link-title">Available Properties</div>
+          <div class="mega-link-sub">Browse our current vacancies in Chattanooga and Signal Mountain</div>
+        </div>
+      </a>
+      <a class="mega-link" href="#portal" onclick="closeMenu()">
+        <div class="mega-link-icon">🔑</div>
+        <div>
+          <div class="mega-link-title">Resident Portal</div>
+          <div class="mega-link-sub">Pay rent, submit maintenance requests, access your lease</div>
+        </div>
+      </a>
+      <a class="mega-link" href="#contact" onclick="closeMenu()">
+        <div class="mega-link-icon">📋</div>
+        <div>
+          <div class="mega-link-title">Apply for a Property</div>
+          <div class="mega-link-sub">Reach out directly — we respond to every inquiry personally</div>
+        </div>
+      </a>
+      <a class="mega-link" href="https://calendar.app.google/6EFw6E3rL77NAnsF6" target="_blank">
+        <div class="mega-link-icon">📅</div>
+        <div>
+          <div class="mega-link-title">Schedule a Viewing</div>
+          <div class="mega-link-sub">Book a time directly on Dean's calendar — no back and forth needed</div>
+        </div>
+      </a>
+      <a class="mega-link" href="#contact" onclick="closeMenu()">
+        <div class="mega-link-icon">🛠</div>
+        <div>
+          <div class="mega-link-title">Maintenance Requests</div>
+          <div class="mega-link-sub">Current residents can submit requests through the portal or contact us directly</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Col 3: Property Owners -->
+    <div class="mega-col">
+      <div class="mega-col-label">For Property Owners</div>
+      <a class="mega-link" href="#contact" onclick="closeMenu()">
+        <div class="mega-link-icon">📈</div>
+        <div>
+          <div class="mega-link-title">List Your Property</div>
+          <div class="mega-link-sub">We manage single-family homes and small multi-family units across Chattanooga</div>
+        </div>
+      </a>
+      <a class="mega-link" href="#about" onclick="closeMenu()">
+        <div class="mega-link-icon">🤝</div>
+        <div>
+          <div class="mega-link-title">Our Management Approach</div>
+          <div class="mega-link-sub">Happy tenants protect your asset — learn how our model works for owners</div>
+        </div>
+      </a>
+      <a class="mega-link" href="https://monarchliving.managebuilding.com/Resident/portal" target="_blank">
+        <div class="mega-link-icon">💼</div>
+        <div>
+          <div class="mega-link-title">Owner Portal Login</div>
+          <div class="mega-link-sub">Access statements, occupancy reports, and maintenance history via Buildium</div>
+        </div>
+      </a>
+      <a class="mega-link" href="#contact" onclick="closeMenu()">
+        <div class="mega-link-icon">📞</div>
+        <div>
+          <div class="mega-link-title">Request a Consultation</div>
+          <div class="mega-link-sub">Speak directly with Dean about your property management needs</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Col 4: Company -->
+    <div class="mega-col">
+      <div class="mega-col-label">Company</div>
+      <a class="mega-link" href="#about" onclick="closeMenu()">
+        <div class="mega-link-icon">👥</div>
+        <div>
+          <div class="mega-link-title">Meet the Team</div>
+          <div class="mega-link-sub">The people behind Monarch — and why that matters</div>
+        </div>
+      </a>
+      <a class="mega-link" href="#about" onclick="closeMenu()">
+        <div class="mega-link-icon">🦋</div>
+        <div>
+          <div class="mega-link-title">Our Story</div>
+          <div class="mega-link-sub">A Chattanooga-rooted company built on accountability and care</div>
+        </div>
+      </a>
+      <a class="mega-link" href="#contact" onclick="closeMenu()">
+        <div class="mega-link-icon">✉️</div>
+        <div>
+          <div class="mega-link-title">Contact Us</div>
+          <div class="mega-link-sub">Send us a message — we respond to every inquiry personally</div>
+        </div>
+      </a>
+      <a class="mega-link" href="https://owners.monarch-united.com" target="_blank">
+        <div class="mega-link-icon">🏠</div>
+        <div>
+          <div class="mega-link-title">Property Owners</div>
+          <div class="mega-link-sub">Own a property? Learn how Monarch can manage it for you</div>
+        </div>
+      </a>
+      <a class="mega-link" href="https://monarch-united.com" target="_blank">
+        <div class="mega-link-icon">👑</div>
+        <div>
+          <div class="mega-link-title">Monarch United</div>
+          <div class="mega-link-sub">Our parent company — building the Monarch portfolio across Tennessee</div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Chattanooga, Tennessee</p>
+    <h1 class="hero-headline">Your home.<br/><em>Our name</em><br/>on it.</h1>
+    <p class="hero-sub">Most property management is faceless. Ours isn't. At Monarch, you deal with real people who take personal pride in where you live — and who you trust with your investment.</p>
+    <div class="hero-actions">
+      <a href="#properties" class="btn-primary">View Properties</a>
+      <a href="https://calendar.app.google/6EFw6E3rL77NAnsF6" target="_blank" class="btn-primary" style="background:transparent; border:1px solid var(--amber); color:var(--amber);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px;margin-bottom:2px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Schedule a Viewing
+      </a>
+      <a href="#contact" class="btn-secondary">Work With Us</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="hero-property.jpg" alt="Featured Monarch property"/>
+  </div>
+
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="about-image">
+    <img src="team-photo.jpg" alt="The Monarch team"/>
+    <div class="about-image-accent"></div>
+  </div>
+  <div class="about-content">
+    <div class="section-header">
+      <p class="eyebrow">Who We Are</p>
+      <h2 class="section-title">Built on relationships,<br/>not just contracts.</h2>
+    </div>
+    <p class="about-body">Monarch Rental Properties was built on a simple belief: the people behind a property management company matter more than any system or software. We're a team that genuinely enjoys working with people — tenants and property owners alike.</p>
+    <p class="about-body">We handle the details so you don't have to, and we do it with the kind of care you'd expect from someone who has their name on the line.</p>
+    <blockquote class="about-tagline">"Your home. Our name on it."</blockquote>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="name">Dean Azzouz</div>
+        <div class="role">Founder & Principal</div>
+      </div>
+      <div class="team-card">
+        <div class="name">Team Member</div>
+        <div class="role">Property Manager</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTIES -->
+<section id="properties">
+  <div class="properties-header">
+    <div class="section-header" style="margin-bottom:0">
+      <p class="eyebrow" style="color:var(--amber)">Our Portfolio</p>
+      <h2 class="section-title light">Current Properties</h2>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterProps('all', this)">All</button>
+      <button class="filter-tab" onclick="filterProps('vacant', this)">Available</button>
+      <button class="filter-tab" onclick="filterProps('occupied', this)">Occupied</button>
+      <button class="filter-tab" onclick="filterProps('offmarket', this)">Off Market</button>
+    </div>
+  </div>
+
+  <!-- MAP LEGEND -->
+  <div class="map-legend">
+    <span class="legend-item"><span class="legend-dot" style="background:#48c78e"></span>Available</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#F2A823"></span>Occupied</span>
+    <span class="legend-item"><span class="legend-dot" style="background:rgba(245,240,232,0.3)"></span>Off Market</span>
+  </div>
+
+  <!-- SPLIT LAYOUT: MAP + CARDS -->
+  <div class="properties-split">
+
+    <!-- MAP PANEL -->
+    <div class="map-panel">
+      <div class="map-container" id="monarchMap">
+        <div id="googleMap" style="width:100%;height:560px;border-radius:4px;"></div>
+      </div>
+    </div>
+
+        <!-- CARDS PANEL -->
+    <div class="cards-panel">
+      <div class="properties-grid" id="propertiesGrid">
+        <div class="loading-props" style="color:rgba(245,240,232,0.3);font-family:'Jost',sans-serif;font-size:0.85rem;padding:2rem;text-align:center;">Loading properties...</div>      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESIDENT PORTAL -->
+<section id="portal">
+  <div class="portal-content">
+    <p class="eyebrow" style="color:var(--navy)">Resident Portal</p>
+    <h2 class="section-title" style="color:var(--navy); margin-bottom:1rem;">Everything you need,<br/>in one place.</h2>
+    <p class="portal-body">Our resident portal is powered by Buildium — giving you 24/7 access to everything related to your home, from wherever you are.</p>
+    <ul class="portal-features">
+      <li>Pay rent online — anytime, any device</li>
+      <li>Submit and track maintenance requests</li>
+      <li>Purchase renters insurance directly through the portal</li>
+      <li>Message your property manager directly</li>
+      <li>View payment history and statements</li>
+    </ul>
+    <a href="https://monarchliving.managebuilding.com/Resident/portal" target="_blank" class="btn-dark">Access Resident Portal</a>
+  </div>
+  <div class="portal-features-grid">
+    <div class="portal-feature-card">
+      <div class="portal-feature-icon">💳</div>
+      <div class="portal-feature-title">Pay Rent</div>
+      <div class="portal-feature-sub">Online payments, auto-pay, and full history — no checks, no hassle.</div>
+    </div>
+    <div class="portal-feature-card">
+      <div class="portal-feature-icon">🛠</div>
+      <div class="portal-feature-title">Maintenance</div>
+      <div class="portal-feature-sub">Submit requests and track progress in real time.</div>
+    </div>
+    <div class="portal-feature-card">
+      <div class="portal-feature-icon">🛡️</div>
+      <div class="portal-feature-title">Renters Insurance</div>
+      <div class="portal-feature-sub">Purchase and manage renters insurance directly through the portal — no extra apps needed.</div>
+    </div>
+    <div class="portal-feature-card">
+      <div class="portal-feature-icon">💬</div>
+      <div class="portal-feature-title">Message Us</div>
+      <div class="portal-feature-sub">Reach Dean and the team directly — a real person always responds.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-info">
+    <p class="eyebrow">Get In Touch</p>
+    <h2 class="section-title light">Let's talk about<br/>your property.</h2>
+    <p class="contact-body">Whether you're looking for your next home or looking for someone to manage yours — we'd love to hear from you. You'll hear back from a real person, not an automated system.</p>
+    <div class="contact-detail">
+      <span class="contact-detail-label">Based In</span>
+      <span class="contact-detail-value">Chattanooga, Tennessee</span>
+    </div>
+  </div>
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input class="form-input" type="text" placeholder="Jane"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input class="form-input" type="text" placeholder="Smith"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" placeholder="jane@email.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone <span style="font-size:0.65rem;color:rgba(245,240,232,0.25);letter-spacing:0.1em;">— optional</span></label>
+      <input class="form-input" type="tel" placeholder="(423) 000-0000"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">I am a...</label>
+      <select class="form-select">
+        <option value="">Select one</option>
+        <option>Prospective tenant</option>
+        <option>Current resident</option>
+        <option>Property owner</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-textarea" placeholder="Tell us what you're looking for..."></textarea>
+    </div>
+    <button type="submit" class="btn-primary" style="width:100%; text-align:center; border:none; cursor:pointer; font-size:0.8rem;">Send Message</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">
+    <img id="site-logo-footer" src="" alt="Monarch Rental Properties" style="height:36px;width:auto;display:none;"/>
+    <span id="footer-brand-text">Monarch Rental Properties LLC &mdash; Chattanooga, TN</span>
+  </span>
+  <span class="footer-tagline">"Your home. Our name on it."</span>
+  <span class="footer-legal">&copy; 2025 Monarch United. All rights reserved.</span>
+</footer>
+
+<script>
+// ── PROPERTY DATA ─────────────────────────────────────────────
+var PROPERTIES = [];
+var PROPERTY_FILES = [
+  "123-lookout-lane",
+  "88-river-bend-drive",
+  "411-vine-street",
+  "72-signal-mountain-rd",
+  "295-tremont-street",
+  "18-holtzclaw-avenue"
+];
+
+var PIN_COLORS = {
+  vacant:    { fill:'#48c78e', stroke:'#48c78e' },
+  occupied:  { fill:'#F2A823', stroke:'#F2A823' },
+  offmarket: { fill:'rgba(245,240,232,0.4)', stroke:'rgba(245,240,232,0.4)' }
+};
+
+var STATUS_LABELS = { vacant:'Available Now', occupied:'Occupied', offmarket:'Off Market' };
+var SCHEDULE_URL  = 'https://calendar.app.google/6EFw6E3rL77NAnsF6';
+var gMap, geocoder, markers = [];
+
+// ── GOOGLE MAPS INIT ──────────────────────────────────────────
+function initMap() {
+  geocoder = new google.maps.Geocoder();
+  gMap = new google.maps.Map(document.getElementById('googleMap'), {
+    center: { lat: 35.0456, lng: -85.3097 },
+    zoom: 12,
+    styles: [
+      { elementType:'geometry', stylers:[{ color:'#1a1a2e' }] },
+      { elementType:'labels.text.fill', stylers:[{ color:'#8c8c9e' }] },
+      { elementType:'labels.text.stroke', stylers:[{ color:'#1a1a2e' }] },
+      { featureType:'road', elementType:'geometry', stylers:[{ color:'#252545' }] },
+      { featureType:'road', elementType:'geometry.stroke', stylers:[{ color:'#1a1a2e' }] },
+      { featureType:'road.highway', elementType:'geometry', stylers:[{ color:'#2d2d50' }] },
+      { featureType:'water', elementType:'geometry', stylers:[{ color:'#0d1b33' }] },
+      { featureType:'water', elementType:'labels.text.fill', stylers:[{ color:'#3d5a80' }] },
+      { featureType:'poi', stylers:[{ visibility:'off' }] },
+      { featureType:'transit', stylers:[{ visibility:'off' }] },
+      { featureType:'landscape', elementType:'geometry', stylers:[{ color:'#1e1e36' }] },
+      { featureType:'administrative', elementType:'geometry.stroke', stylers:[{ color:'#2d2d50' }] }
+    ]
+  });
+  // Only geocode if properties already loaded — otherwise loadProperties() will call it
+  if (PROPERTIES.length > 0) geocodeProperties();
+}
+
+function geocodeProperties() {
+  markers = [];
+  PROPERTIES.forEach(function(p, idx) {
+    geocoder.geocode({ address: p.address }, function(results, status) {
+      if (status === 'OK') {
+        var pos = results[0].geometry.location;
+        var c = PIN_COLORS[p.status];
+        var marker = new google.maps.Marker({
+          position: pos,
+          map: gMap,
+          title: p.label,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: c.fill,
+            fillOpacity: 1,
+            strokeColor: '#1a1a2e',
+            strokeWeight: 2
+          }
+        });
+        var infoContent = '<div style="background:#1a1a2e;color:#F5F0E8;padding:10px 14px;border-radius:4px;font-family:sans-serif;min-width:160px;">'
+          + '<div style="font-size:13px;font-weight:500;margin-bottom:3px;">' + p.label + '</div>'
+          + '<div style="font-size:11px;color:rgba(245,240,232,0.5);margin-bottom:6px;">' + STATUS_LABELS[p.status] + '</div>'
+          + '<div style="font-size:12px;color:#D87B2A;">' + p.rent + ' &nbsp;·&nbsp; ' + p.beds + 'bd ' + p.baths + 'ba</div>'
+          + '</div>';
+        var infoWindow = new google.maps.InfoWindow({ content: infoContent });
+        marker.addListener('click', function() {
+          infoWindow.open(gMap, marker);
+          highlightCard(idx);
+        });
+        markers[idx] = marker;
+      }
+    });
+  });
+}
+
+// ── RENDER CARDS ──────────────────────────────────────────────
+function renderCards() {
+  var grid = document.getElementById('propertiesGrid');
+  grid.innerHTML = '';
+  PROPERTIES.forEach(function(p, idx) {
+    var isVacant = p.status === 'vacant';
+    var card = document.createElement('div');
+    card.className = 'property-card';
+    card.dataset.status = p.status;
+    card.dataset.idx = idx;
+
+    var imgHtml = p.photo
+      ? '<img src="' + p.photo + '" alt="' + p.label + '" class="property-img" style="width:100%;height:90px;object-fit:cover;"/>'
+      : '<div class="property-img-placeholder"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 42V20L24 6L42 20V42H30V30H18V42H6Z" fill="white"/></svg></div>';
+
+    var scheduleBtn = isVacant
+      ? '<a href="' + SCHEDULE_URL + '" target="_blank" class="schedule-btn">'
+        + '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
+        + 'Schedule a Viewing</a>'
+      : '';
+
+    card.innerHTML = imgHtml
+      + '<div class="property-info">'
+      + '<span class="property-status status-' + p.status + '">' + STATUS_LABELS[p.status] + '</span>'
+      + '<div class="property-address">' + p.label + '</div>'
+      + '<div class="property-city">' + p.address.split(',').slice(1).join(',').trim() + '</div>'
+      + '<div class="property-details">'
+      + '<span class="property-detail">' + p.beds + ' bed</span>'
+      + '<span class="property-detail">' + p.baths + ' bath</span>'
+      + '<span class="property-detail">' + p.sqft + '</span>'
+      + '<span class="property-rent">' + p.rent + '</span>'
+      + '</div>'
+      + scheduleBtn
+      + '</div>';
+
+    card.addEventListener('mouseenter', function() { highlightCard(idx); });
+    card.addEventListener('mouseleave', function() { clearHighlights(); });
+    grid.appendChild(card);
+  });
+}
+
+// ── HIGHLIGHT ─────────────────────────────────────────────────
+function highlightCard(idx) {
+  clearHighlights();
+  var card = document.querySelector('.property-card[data-idx="'+idx+'"]');
+  if (card) { card.classList.add('highlighted'); card.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+  if (markers[idx]) { gMap && gMap.panTo(markers[idx].getPosition()); }
+}
+
+function clearHighlights() {
+  document.querySelectorAll('.property-card').forEach(function(c) { c.classList.remove('highlighted'); });
+}
+
+// ── FILTER ────────────────────────────────────────────────────
+function filterProps(status, btn) {
+  document.querySelectorAll('.filter-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.property-card').forEach(function(card) {
+    card.style.display = (status === 'all' || card.dataset.status === status) ? '' : 'none';
+  });
+  if (markers.length) {
+    markers.forEach(function(marker, idx) {
+      if (!marker) return;
+      var show = status === 'all' || PROPERTIES[idx].status === status;
+      marker.setVisible(show);
+    });
+  }
+}
+
+// ── MENU ──────────────────────────────────────────────────────
+function toggleMenu() {
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('megaMenu');
+  var overlay = document.getElementById('menuOverlay');
+  if (!btn || !menu || !overlay) return;
+  if (menu.classList.contains('open')) {
+    closeMenu();
+  } else {
+    btn.classList.add('open');
+    menu.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeMenu() {
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('megaMenu');
+  var overlay = document.getElementById('menuOverlay');
+  if (btn) btn.classList.remove('open');
+  if (menu) menu.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
+
+// ── CONTACT FORM ──────────────────────────────────────────────
+function handleSubmit(e) {
+  e.preventDefault();
+  var btn = e.target.querySelector('button[type=submit]');
+  btn.textContent = "Message Sent — We'll be in touch!";
+  btn.style.background = '#48c78e'; btn.style.color = '#fff';
+  setTimeout(function() {
+    btn.textContent = 'Send Message';
+    btn.style.background = ''; btn.style.color = '';
+    e.target.reset();
+  }, 4000);
+}
+
+// ── NETLIFY IDENTITY ──────────────────────────────────────────
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', function(user) {
+    if (!user) {
+      window.netlifyIdentity.on('login', function() {
+        document.location.href = '/admin/';
+      });
+    }
+  });
+}
+
+// ── YAML PARSER (minimal) ────────────────────────────────────
+function parseYaml(text) {
+  var obj = {};
+  var lines = text.split('\n');
+  lines.forEach(function(line) {
+    var m = line.match(/^([\w_]+):\s*"?(.*?)"?\s*$/);
+    if (m && m[1]) {
+      var val = m[2].replace(/^"|"$/g, '').trim();
+      // parse numbers
+      if (val !== '' && !isNaN(val) && val.indexOf('.') !== -1) obj[m[1]] = parseFloat(val);
+      else if (val !== '' && !isNaN(val)) obj[m[1]] = parseInt(val);
+      else obj[m[1]] = val;
+    }
+  });
+  return obj;
+}
+
+// ── PROPERTY LOADER ───────────────────────────────────────────
+function loadProperties() {
+  var promises = PROPERTY_FILES.map(function(slug) {
+    return fetch('/_data/properties/' + slug + '.yml')
+      .then(function(r) { return r.ok ? r.text() : null; })
+      .then(function(text) { return text ? parseYaml(text) : null; })
+      .catch(function() { return null; });
+  });
+
+  Promise.all(promises).then(function(results) {
+    PROPERTIES = results.filter(function(p) { return p !== null; });
+    renderCards();
+    // Geocode only if Maps API already loaded, otherwise initMap will handle it
+    if (window.google && window.google.maps && geocoder) {
+      geocodeProperties();
+    }
+  });
+}
+
+// ── LOGO LOADER ───────────────────────────────────────────────
+function loadBranding() {
+  fetch('/_data/settings/branding.yml')
+    .then(function(r) { return r.ok ? r.text() : null; })
+    .then(function(text) {
+      if (!text) return;
+      var data = parseYaml(text);
+      var logoUrl    = data.logo_main   || '';
+      var faviconUrl = data.favicon     || '';
+
+      if (logoUrl) {
+        // Nav bar
+        var navLogo = document.getElementById('site-logo-nav');
+        var navText = document.getElementById('nav-wordmark-text');
+        if (navLogo) { navLogo.src = logoUrl; navLogo.style.display = 'block'; }
+        if (navText) navText.style.display = 'none';
+
+        // Hamburger dropdown
+        var menuLogo  = document.getElementById('site-logo-menu');
+        var menuLabel = document.getElementById('menu-brand-label');
+        if (menuLogo)  { menuLogo.src = logoUrl; menuLogo.style.display = 'block'; }
+        if (menuLabel) menuLabel.style.display = 'none';
+
+        // Footer
+        var footerLogo = document.getElementById('site-logo-footer');
+        var footerText = document.getElementById('footer-brand-text');
+        if (footerLogo) { footerLogo.src = logoUrl; footerLogo.style.display = 'block'; }
+        if (footerText) footerText.style.display = 'none';
+      }
+
+      if (faviconUrl) {
+        var link = document.querySelector("link[rel~='icon']") || document.createElement('link');
+        link.rel = 'icon'; link.type = 'image/png'; link.href = faviconUrl;
+        document.head.appendChild(link);
+      }
+    })
+    .catch(function() {});
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  loadProperties();
+  loadBranding();
+});
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq3pgBJZo18u90aEr8NF-eryve8CeNy_o&callback=initMap&libraries=places" async defer></script>
+</body>
+</html>
