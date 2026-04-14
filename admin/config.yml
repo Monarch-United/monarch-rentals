@@ -1,0 +1,98 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+
+  # ── PROPERTIES ────────────────────────────────────────────────
+  # When you save a property here, also update data/properties.js
+  # with the same info so it shows on the live site immediately.
+  - name: "properties"
+    label: "Properties"
+    label_singular: "Property"
+    folder: "_data/properties"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Display Label", name: "label", widget: "string", hint: "Short name shown on cards e.g. Lookout Lane" }
+      - { label: "Full Address", name: "address", widget: "string", hint: "Full address — used to plot the map pin automatically e.g. 123 Lookout Lane, Chattanooga, TN 37403" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Available — green pin", value: "vacant" }
+          - { label: "Occupied — amber pin", value: "occupied" }
+          - { label: "Off Market — gray pin", value: "offmarket" }
+        default: "vacant"
+      - label: "Property Type"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Single Home", value: "single" }
+          - { label: "Multi-Unit", value: "multi" }
+          - { label: "Apartment Complex", value: "apartment" }
+        default: "single"
+      - { label: "Monthly Rent", name: "rent", widget: "string", hint: "e.g. $1,850/mo" }
+      - { label: "Bedrooms", name: "beds", widget: "number", value_type: "int", min: 1, max: 20 }
+      - { label: "Bathrooms", name: "baths", widget: "number", value_type: "float", min: 1, max: 20, step: 0.5 }
+      - { label: "Square Footage", name: "sqft", widget: "string", hint: "e.g. 1,450 sqft" }
+      - label: "Additional Photos (carousel)"
+        name: "photos"
+        widget: "list"
+        required: false
+        hint: "Upload multiple photos — all shown in the carousel when someone clicks the property card"
+        field: { label: "Photo", name: "photo", widget: "image" }
+      - { label: "Description", name: "description", widget: "text", required: false, hint: "2-3 sentences shown on the property card" }
+      - { label: "Years Under Management", name: "years_managed", widget: "number", value_type: "float", required: false, hint: "e.g. 1.5 — shown on the owner portfolio view" }
+      - { label: "Zillow Listing Link", name: "zillow_url", widget: "string", required: false, hint: "Paste the full Zillow URL for this property e.g. https://www.zillow.com/homedetails/..." }
+
+  # ── TEAM MEMBERS ──────────────────────────────────────────────
+  - name: "team"
+    label: "Team Members"
+    label_singular: "Team Member"
+    folder: "_data/team"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Full Name", name: "name", widget: "string" }
+      - { label: "Role / Title", name: "role", widget: "string", hint: "e.g. Founder & Principal" }
+      - { label: "Headshot", name: "photo", widget: "image", required: false }
+      - { label: "Bio", name: "bio", widget: "text", required: false }
+
+  # ── SITE SETTINGS ─────────────────────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+
+      - label: "Logos"
+        name: "branding"
+        file: "_data/settings/branding.yml"
+        fields:
+          - label: "Main Logo — Transparent PNG"
+            name: "logo_main"
+            widget: "image"
+            required: false
+            hint: "Appears in nav bar, hamburger menu, and footer. Transparent background PNG."
+          - label: "Favicon — Crown-Key Icon Only"
+            name: "favicon"
+            widget: "image"
+            required: false
+            hint: "Browser tab icon. Square PNG, 512x512px."
+          - label: "Hero Background Image"
+            name: "hero_image"
+            widget: "image"
+            required: false
+            hint: "Full-bleed photo on the right side of the hero section. Minimum 1200px wide."
+
+      - label: "Contact Info"
+        name: "contact"
+        file: "_data/settings/contact.yml"
+        fields:
+          - { label: "Phone Number", name: "phone", widget: "string", required: false }
+          - { label: "Email Address", name: "email", widget: "string", required: false }
+          - { label: "Location", name: "location", widget: "string", default: "Chattanooga, Tennessee" }
